@@ -1,0 +1,20 @@
+
+/* Overrides */
+.jumbotron {
+  border-top: 10px solid #333;
+}
+
+.display-4 {
+  font-family: monospace;
+}
+
+/* Styles */
+.contentBox {
+  margin-bottom: 3rem;
+  font-style: italic;
+}
+
+.contentBox h2 {
+  border-bottom: 2px dashed;
+  margin-bottom: 1rem;
+}
