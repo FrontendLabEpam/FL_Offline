@@ -148,6 +148,23 @@ https://css-tricks.com/pseudo-class-selectors/
 ```
 
 ---
+
+###The Document Ready Event
+Specify a function to execute when the DOM is fully loaded.
+
+```javascript
+$( document ).ready(function() {
+  // Handler for .ready() called.
+});
+
+$(function() {
+  // Handler for .ready() called.
+});
+```
+
+https://learn.javascript.ru/onload-ondomcontentloaded
+
+---
 ###Traversing
 
 Though traversing is quite a powerfull tool, it is wiser not to abbuse it too much.
@@ -197,22 +214,6 @@ clone() // create a deep copy of an element
 wrap() // wrap element with another element
 detach() // same as remove but keeps all jQuery related data
 ```
----
-
-###The Document Ready Event
-Specify a function to execute when the DOM is fully loaded.
-
-```javascript
-$( document ).ready(function() {
-  // Handler for .ready() called.
-});
-
-$(function() {
-  // Handler for .ready() called.
-});
-```
-
-https://learn.javascript.ru/onload-ondomcontentloaded
 
 ---
 ##Animation
@@ -252,7 +253,6 @@ event.preventDefault(), event.stopPropagation(), event.target
 Note: some events can be used as both handlers and triggers
 $('input').focus(handler) -> attaches handler onFocus
 $('input').focus() -> sets focus on input
-
 
 ---
 ##Ajax
