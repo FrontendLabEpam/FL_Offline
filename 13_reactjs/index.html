@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ReactJS 🤘</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href="../assets/css/reset.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/css/fonts.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/css/typography.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+  <div class="wrapper">
+    <header class="mainheader">
+      <div class="logo">
+        <a href=""><span class="logotext">ReactJS</span></a>
+      </div>
+    </header>
+  </div>
+
+  <!-- ================== Slides ================== -->
+  <textarea id="source">
+
+class: center, middle
+
+.title[
+Front-end training
+# React JS
+]
+
+---
+
+class: center, middle
+
+![React log](assets/react-logo.svg)
+
+---
+# What is ReactJS?
+
+* It's just a library (not a framework)
+* Declarative, Component-Based, Learn Once, Write Anywhere
+* Open sourced on [GitHub](https://github.com/facebook/react)
+* Made by Facebook 🤘
+* Was introduced on JSConf EU in 2013 (https://youtu.be/x7cQ3mrcKaY)
+
+---
+
+# Key pooints
+
+* Who are you React? What can you do?
+* Q&A
+* UI components, JSX
+* Q&A
+* Data flow, Synthetic events
+* Q&A
+* Virtual DOM, Lifecycle hooks
+
+---
+
+# What would React look like in real life?
+
+.columns[.col-50[
+  ## Angular
+  ![Angular Bicycle](./assets/angular-bicycle.gif)
+].col-50[
+  ## React
+  ![React Bicycle](./assets/react-bicycle.gif)
+]]
+
+---
+
+# What makes React so popular?
+
+ * Learning curve
+![React learning curve](./assets/learning-curve.png)
+ * Easy data flow
+ * Easy debugging & testing
+ * Good documentation
+
+---
+
+# What is the Virtual DOM?
+
+ The virtual DOM (VDOM) is a programming concept where an ideal, or “virtual”,
+ representation of a UI is kept in memory and synced with the “real” DOM by a
+ library such as ReactDOM. This process is called [reconciliation](https://reactjs.org/docs/reconciliation.html).
+
+--
+
+  Example:
+ ![Virtual DOM](./assets/virtual-dom.png)
+
+---
+
+# Reconciliation 😕
+
+🚨 MANY WORDS ALARM! 🚨
+
+There are some generic solutions to this algorithmic problem of generating the
+minimum number of operations to transform one tree into another.
+However, the [state of the art algorithms](https://grfia.dlsi.ua.es/ml/algorithms/references/editsurvey_bille.pdf) have a complexity in the order of O(n^3)
+where n is the number of elements in the tree.
+
+According to the algorithm complexity: **1 000** elements in the tree, requires **1 000 000 000** comperations.
+
+React implements a heuristic O(n) algorithm based on two assumptions:
+
+* Two elements of different types will produce different trees.
+* The developer can hint at which child elements may be stable across different renders with a [key](https://reactjs.org/docs/lists-and-keys.html#keys) prop.
+
+In practice, these assumptions are valid for almost all practical use cases.
+
+---
+
+# Elements Of Different Types
+
+Whenever the root elements have different types, React will tear down the old tree and build the new tree from scratch.
+
+Example:
+.columns[.col-60[
+  ![Reconcilation re-rendering](./assets/reconcilation-rerendering.png)
+]]
+
+---
+
+# I am so boooraaad
+
+.columns[.col-50[
+  ## Q&A
+
+  * What is the Virtual DOM?
+  * What is the Reconsilation?
+  * Which assumptions React follows to increase performance?
+].col-50[
+  ![Bored woman](./assets/bored-woman.gif)
+]]
+
+
+---
+
+class: center, middle
+
+.title[
+Front-end training
+# UI Components, JSX
+]
+
+---
+
+# JSX (JavaScript Syntax Extension)
+
+Code example:
+```javascript
+const element = <h1>Hello, world!</h1>;
+```
+This funny tag syntax is neither a string nor HTML.
+
+React team recommends using it with React to describe what the UI should look like.
+JSX may remind you of a template language, but it comes with the full power of JavaScript.
+
+JSX produces React “elements”.
+
+--
+
+## Why JSX?
+
+* Instead of artificially separating technologies by putting markup and logic
+in separate files, React separates concerns with loosely coupled units called
+“components” that contain both.
+* It looks similar to HTML
+
+---
+# JSX (JavaScript Syntax Extension)
+
+Each JSX element is just syntactic sugar for calling
+```JavaScript
+React.createElement(component, props, ...children).
+```
+
+So, anything you can do with JSX can also be done with just plain JavaScript.
+
+--
+
+
+.columns[.col-40[
+### JSX approach:
+```JSX
+<ul>
+  <li>The first</li>
+  <li>The second</li>
+  <li>The third</li>
+</ul>
+```
+].col-60[
+### Plain JavaScript approach:
+```JavaScript
+React.createElement("ul", null,
+  React.createElement("li", null, "The first"),
+  React.createElement("li", null, "The second"),
+  React.createElement("li", null, "The third")
+);
+```
+]]
+
+[Try it out!](https://babeljs.io/en/repl#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=ATA8FcBsD4CgRKSBLaAVAFgU2AM2QE4DOALqAPQpwJhWY5FYDGA9gHYAmFV8CSq9YCQyEulVLwpQ4QA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=es2015%2Creact%2Cstage-2&prettier=false&targets=&version=6.26.0&envVersion=) with Babel compiler
+
+
+---
+
+# UI components
+
+Components let you split the UI into independent, reusable pieces, and think about each piece in isolation.
+
+Conceptually, components are like JavaScript functions. They accept arbitrary inputs (called “props”) and return React elements
+describing what should appear on the screen.
+
+--
+
+![component](assets/component.png)
+
+---
+
+# My first React component
+
+```javascript
+// Declaration
+function Button(props) {
+  return <button>Button</button>
+}
+```
+
+```JSX
+// Invocation
+...
+<Button /> // not <button />
+...
+```
+
+All React components start with capitalized symbol
+
+---
+
+# How to understand what is a component?
+
+Component is:
+* a building block
+* independent piece of functionality
+* reusable UI element
+
+Also, each component should follow the [KISS](https://en.wikipedia.org/wiki/KISS_principle) principle (Keep it simple, stupid)
+
+The [Thinking in React](https://reactjs.org/docs/thinking-in-react.html) article may be useful
+
+---
+
+# Examples of components
+
+Let us imagine that React is a Lego. Lego consists of building blocks.
+Each building block can be used to create something. Lets create a bicycle.
+
+.columns[.col-30[
+### Components you need:
+```JSX
+  <Wheel />
+  <Frame />
+  <HandleBar />
+  <Saddle />
+  <Pedal />
+  <BicycleChain />
+```
+
+].col-60[
+### It can be something like this:
+```JSX
+  <Frame>
+    <div className="controls">
+      <HandleBar />
+    </div>
+
+    <div className="wheels">
+      <Wheel />
+      <Wheel />
+    </div>
+
+    <div className="cranks">
+      <BicycleChain />
+
+      <Pedal />
+      <Pedal />
+    </div>
+
+    <Saddle />
+  </Frame>
+```
+]]
+
+---
+
+# How to customize component? (props)
+
+
+Simple component (do nothing)
+```JSX
+function Wheel() {
+  return <div className="wheel"></div>
+}
+```
+
+Simple component (styles are hardcoded)
+```JSX
+function Wheel() {
+  const styles = { color: 'red' }
+
+  return <div className={styles}></div>
+}
+```
+
+Simple component (styles are flexible)
+```JSX
+function Wheel(props) {  // props = { color: 'red' }
+  const styles = { color: props.color } // makes it flexible
+  return <div className={styles}></div>
+}
+```
+
+---
+
+# How to customize component? (props)
+
+Props is a way of passing the data into the component
+
+```JSX
+// Invocation
+<Wheel color="red" /> // It will be available inside the component via props
+
+// Component
+function Wheel(props) {
+  console.log(props); // { color: red }
+  return <div ...></div>
+}
+
+```
+
+---
+
+# Functional and Class Components
+
+Functional component:
+
+```javascript
+function Button(props) {
+  return <button>{props.title}</button>;
+}
+```
+
+Class component:
+
+```javascript
+class Button extends React.Component {
+  render() {
+    return <button>{this.props.title}</button>;
+  }
+}
+```
+
+At this point the above two components are equivalent from React’s point of view
+
+---
+
+# Rendering of the components
+
+For component rendering, we using `raect-dom` library which knows how to render components into DOM.
+
+```javascript
+function Button(props) {
+  return <button>{props.title}</button>;
+}
+
+ReactDOM.render(
+  <Button title="Submit" />, // Component
+  document.getElementById('root') // where to put your application
+);
+```
+
+---
+
+# Component Composition
+
+```
+import React from 'react' // don't forget to import React
+
+import App from './app.js'
+import Header from './header.js'
+import Sidebar from './sidebar.js'
+import Main from './main.js'
+import Footer from './footer.js'
+
+function Root(props) {
+  return (
+    <App>
+      <Header />
+      <Sidebar />
+      <Main />
+      <Footer />
+    </App>
+  )
+}
+```
+
+---
+
+# Component Composition. Children
+
+```JSX
+// app.jsx
+function App(props) {
+  return <div className="root">{props.children}</div> // using of children
+}
+
+// Client.jsx
+import React from 'react'
+import { render } from 'react-dom'
+import Root from './root';
+
+render(
+  <Root />,
+  document.getElementById('app')
+)
+```
+
+---
+
+# Ehm... Ahm...
+
+.columns[.col-50[
+  ## Q&A
+
+  * What is a JSX?
+  * Why do we need to use it?
+  * What is the component?
+  * How to pass some data to the component from the outside?
+  * How to access this data inside the component?
+  * What is a component composition?
+  * What is a `props.children`?
+].col-50[
+  ![Bored woman](./assets/exhausted-woman.gif)
+]]
+
+---
+
+class: center, middle
+
+.title[
+Front-end training
+# Data flow
+]
+
+---
+
+
+# Data flow
+
+- Parent-to-Child
+  - Data can be passed to children as properties and available as `this.props`
+  - Properties are immutable
+
+- Child-to-Parent
+  - Event handlers (callbacks) can be passed as properties
+
+--
+
+![component](assets/react-data-flow.png)
+
+---
+
+# Data flow
+
+In the React application, the communication between sibling components occurs
+through the parent component
+
+```JSX
+// Parent component
+
+class Parent extends React.Component {
+  render() {
+    return (
+      <div>
+        <Child1 /> // It is the sibling of the Child2
+        <Child2 /> // It is the sibling of the Child1
+      </div>
+    );
+  }
+}
+
+```
+
+Let's imagine that `Child1` want to say something to `Child2`
+
+---
+
+# Data flow
+
+.columns[.col-50[
+```JSX
+class Child1 extends React.Component {
+  render() {
+    return (
+      <div>
+        <button
+          onClick={this.props.onClick}
+        >
+        Say Hello to Child2
+      </button>
+      </div>
+    );
+  }
+}
+```
+].col-50[
+  ```JSX
+  class Child1 extends React.Component {
+    render() {
+      return (
+        <p>{this.props.message}</p>
+      );
+    }
+  }
+  ```
+]]
+
+---
+
+# Data flow
+
+```JSX
+// Parent component
+
+class Parent extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      message: ''
+    }
+
+    this.sayHello = this.sayHello.bind(this);
+  }
+
+  sayHello() {
+    this.setState({ message: 'Hello' });
+  }
+
+  render() {
+    return (
+      <div>
+        <Child1 onClick={this.sayHello} /> // It is the sibling of the Child2
+        <Child2 message={this.state.message} /> // It is the sibling of the Child1
+      </div>
+    );
+  }
+}
+
+```
+
+---
+
+# Data Flow
+
+Ok, but how about validation of incoming props 🤔
+
+```
+// Header.js
+import React from 'react'
+import PropTypes from 'prop-types';
+
+const Child1 extends React.Component {
+  render() {
+    return <p>{this.props.message}</p>;
+  }
+}
+
+Child1.propTypes = {
+  message: PropTypes.string // PropTypes.string.isRequired,
+}
+
+Child1.defaultProps = {
+  message: 'My default message'
+}
+```
+
+---
+
+# Data Flow, component State
+
+State is mutable and a [private](https://medium.com/react-tutorials/react-state-14a6d4f736f5#.6byg04o4r) data-set of a component.
+Each time state is changed, UI will be changed.
+
+```
+...
+constructor(props) {
+  this.state.name = 'Michael';
+}
+
+render() {
+  return (
+    <h1>Hello {this.state.name}</h1>
+  );
+}
+```
+
+--
+
+Do Not Modify State Directly
+```
+this.state.name = 'Petro'; //wrong
+```
+In order to update state use setState method
+```
+this.setState({name: 'Petro'})```
+
+Thanks to the setState() call, React knows the state has changed, and calls render() method again to learn what should be on the screen
+
+---
+
+# Data Flow, component State
+
+```javascript
+class App extends React.Component {
+  constructor(props) {
+      this.state = {
+          count: 0
+      }
+
+      this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(e) {
+      this.setState(prevState => {
+          count: prevState.count + 1
+      });
+  }
+
+  render() {
+      return (
+          <div>
+              <h1>{this.state.count}</h1>
+              <button onClick={this.onClick}>Count Up!!</button>
+          </div>
+      )
+  }
+}
+```
+---
+
+# Synthetic Events
+
+Handling events with React elements is very similar to handling events on DOM elements. There are some syntactic differences:
+
+- React events are named using camelCase, rather than lowercase.
+- With JSX you pass a function as the event handler, rather than a string.
+
+For example, the HTML:
+
+```
+<button onclick="activateLasers()">
+  Activate Lasers
+</button>
+```
+
+is slightly different in React:
+
+```
+<button onClick={activateLasers}>
+  Activate Lasers
+</button>
+```
+
+
+---
+
+# State-shmate, synthetic-kinestetik. What the hell?
+
+.columns[.col-50[
+  ## Q&A
+
+  * What kind of data-flow React use?
+  * What is a state?
+  * How to update state?
+  * What happens after state is updated?
+  * How to pass data from one sibling component to another?
+  * What are synthetic events? And why they are useful?
+].col-50[
+  ![Bored woman](./assets/exhausted-man.gif)
+]]
+
+
+---
+
+class: center, middle
+
+.title[
+Front-end training
+# Virtual DOM
+]
+
+---
+
+# What is the Virtual DOM?
+
+The virtual DOM (VDOM) is a programming concept where an ideal, or “virtual”, representation of a UI is kept in memory 
+and synced with the “real” DOM by a library such as ReactDOM. This process is called reconciliation.
+
+![component](assets/virtual-dom.jpg)
+
+---
+
+# Component lifecircle events
+
+### Mounting
+These methods are called when an instance of a component is being created and inserted into the DOM:
+
+- constructor()
+- componentWillMount() **will be depricated soon**
+- render()
+- componentDidMount()
+
+### Updating
+An update can be caused by changes to props or state. These methods are called when a component is being re-rendered:
+
+- componentWillReceiveProps() **will be depricated soon**
+- shouldComponentUpdate()
+- componentWillUpdate() **will be depricated soon**
+- render()
+- componentDidUpdate()
+
+---
+
+# Component lifecircle events
+
+### Unmounting
+This method is called when a component is being removed from the DOM:
+
+- componentWillUnmount()
+
+### Other APIs
+Each component also provides some other APIs:
+
+- setState()
+- forceUpdate()
+
+### Recently added life-cycle hooks
+- static getDerivedStateFromProps
+- getSnapshotBeforeUpdate
+
+---
+
+# Component lifecircle events (with deprecated methods)
+
+![component](assets/lifecircle.png)
+
+---
+
+# Component lifecycle events
+
+![Life-cycle diagram NEW!](./assets/life-cycle-diagram-new.jpeg)
+
+---
+
+# Read at home
+
+Articles:
+* https://reactjs.org/tutorial/tutorial.html
+* https://github.com/planningcenter/react-patterns
+
+Videos:
+* https://egghead.io/courses/the-beginner-s-guide-to-react
+* https://egghead.io/courses/getting-started-with-redux
+* https://www.youtube.com/watch?v=uvAXVMwHJXU
+
+Subscribe to http://reactjsnewsletter.com/ newsletter (it's FREE 🎉)
+
+---
+
+class: center, middle
+
+# Thank You!
+### Questions?
+
+    </textarea>
+  <!-- ================== End of Slides ================== -->
+
+  <script src="../assets/js/remark-latest.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    remark.create({
+      highlightStyle: 'github',
+      highlightLanguage: 'javascript',
+      highlightLines: true,
+      countIncrementalSlides: false
+    });
+  </script>
+</body>
+
+</html>
