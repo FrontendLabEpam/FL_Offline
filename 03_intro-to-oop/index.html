@@ -65,6 +65,73 @@ class: center, middle
 
 .title[
   Front-end training
+  # How to create objects in JavaScript
+]
+
+---
+
+# Create objects in JavaScript
+
+```javascript
+const johnUser = {
+  firstName: 'John',
+  isAdmin: false,
+  age: 25,
+  greeting() {
+    console.log('Hi all!')
+  }
+};
+
+
+const johnAdmin = Object.create({ 
+  greeting() {
+    console.log('Hi all!')
+  } 
+}, {
+  firstName: { value: "John", writable: true, enumerable: true },
+  isAdmin: { value: true, writable: true, enumerable: true },
+  age: { value: 25, writable: true, enumerable: true }
+});
+
+```
+
+---
+
+class: center, middle
+
+# Constructor
+
+---
+
+# Constructor
+
+Constructor is a function that creates and initializes the newly created object according to the
+template.
+
+```javascript
+function Table(rows, columns, editable) {
+  this.rows = rows;
+  this.columns = columns
+  this.editable = editable;
+}
+
+const myAwesomeTable = new Table(6, 12, true);
+
+// myAwesomeTable = {
+//   rows: 6,
+//   columns: 12,
+//   editable: true
+// }
+```
+
+The names of the functions that are designed to create objects, as a rule, begin with a capital letter.
+
+---
+
+class: center, middle
+
+.title[
+  Front-end training
   # This, that, self
 ]
 
@@ -73,37 +140,6 @@ class: center, middle
 class: center, middle
 
 # What's this?
-
----
-
-class: middle
-
-> One of the most confused mechanisms in JavaScript is the `this` keyword. It's a special identifier
-keyword that's automatically defined in the scope of every function, but what exactly it refers
-to bedevils even seasoned JavaScript developers. -- Kyle Simpson
-
----
-
-# Context "this"
-
-```javascript
-const user = {
-  firstName: 'Petya'
-};
-const admin = {
-  firstName: 'Vasya'
-};
-
-function getName() {
-  return this.firstName;
-}
-
-user.a = getName;
-user.a(); // returns 'Petya'
-showName.call(admin); // returns 'Vasya'
-showName(); // returns undefined
-              // in case 'srict mode' will throw TypeError: `this` is `undefined`
-```
 
 ---
 
@@ -119,84 +155,106 @@ is determined entirely by the call-site where the function is called. -- Kyle Si
 There are 4 invocation patterns in JS:
 * Default Binding
 
-```javascript
-function func() {
-  console.log(this.a);
-}
-func(); // this is bond to the global object.
-```
-
 * Implicit Binding
-
-```javascript
-const a = {
-  func: // some function
-}
-a.func(); // this refers to the object, i.e., a.
-```
 
 * Explicit Binding
 
-```javascript
-func.apply(thisArg, argArray); // this is bond to the first argument
-```
 * `new` Binding
 
+---
+
+# Default Binding
+
 ```javascript
-const func = new Func(); // this refers to func while in Func constructor
+var myCount = 10;
+
+function getMyCount() {
+  var myCount = 12;
+  console.log(this);   /// -> ???
+  console.log(this.myCount);  /// -> ???
+}
+
+getMyCount();
+
+```
+
+---
+
+# Implicit Binding
+
+```javascript
+const cash = 1000;
+
+const myWallet = {
+  cash: 0,
+  getInfo() {
+    const cash = 150;
+    console.log(this);  /// -> ???
+    console.log(this.cash);  /// -> ???
+  }
+}
+
+myWallet.getInfo();
+
+```
+
+---
+
+# Explicit Binding
+
+```javascript
+var name = 'Peter';
+
+function sayHi() {
+  console.log(this);   /// -> ???
+  console.log(this.name);  /// -> ???
+};
+
+const userDen = {
+  name: 'Den'
+};
+
+sayHi.call(userDen);
+
+```
+
+---
+
+# new Binding
+
+```javascript
+var price = 1000;
+
+function Laptop(price, model) {
+  const price = 200;
+  this.price = price;
+  this.model = model;
+  this.getInfo = function() {
+    const price = 300;
+    console.log(this);  /// -> ???
+    console.log(this.price);  /// -> ???
+  };
+};
+
+const myLaptopHP = new Laptop(500, 'Pavilion');
+
+myLeptopHP.getInfo();
+
 ```
 
 ---
 
 class: center, middle
 
-# Constructor
+# How does constructor work?
 
 ---
 
 class: middle
 
-When a function is invoked with `new` in front of it, otherwise known as a constructor call, the following things are done automatically:
-
-1. a brand new object is created (aka, constructed) out of thin air
-2. *the newly constructed object is `[[Prototype]]`-linked*
-3. the newly constructed object is set as the `this` binding for that function call
-4. unless the function returns its own alternate **object**, the `new`-invoked function call will *automatically* return the newly constructed object.
-
----
-
-# Constructor
-
-Constructor is a function that creates and initializes the newly created object according to the
-template.
-
-```javascript
-function Animal(name) {
-  this.name = name;
-  this.canWalk = true;
-}
-
-const dog = new Animal("dog");
-
-// dog = {
-//   name: "dog",
-//   canWalk: true
-// }
-```
-
-The names of the functions that are designed to create objects, as a rule, begin with a capital letter.
-
----
-
-# "Classes" in JS
-
-Objects with identical methods of behavior creates class or object type (javascript). Class retains
-constructive plan of own objects.
-
-Each object - a member of a class, is an instance of class or object.
-
 ```javascript
 function Clock(hours, minutes) {
+  // this = {};
   this.hours = hours;
   this.minutes = minutes;
   this.setTime = function(hours, minutes) {
@@ -206,14 +264,14 @@ function Clock(hours, minutes) {
   this.displayTime = function () {
     console.log(this.hours + ":" + this.minutes);
   }
+
+  // return this;
 }
 
   const clock = new Clock(12, 30);
-  const secondClock = new Clock(11, 45);
 
   clock.setTime(12, 45);
   clock.displayTime(); // 12:45
-  secondClock.displayTime(); // 11:45
 
   console.log(clock instanceof Clock); // true
 ```
@@ -240,11 +298,9 @@ class Clock {
 }
 
 const clock = new Clock(12, 30);
-const secondClock = new Clock(11, 45);
 
 clock.setTime(12, 45);
 clock.displayTime(); // 12:45
-secondClock.displayTime(); // 11:45
 
 console.log(clock instanceof Clock); // true
 ```
@@ -282,11 +338,11 @@ function Clock(hours, minutes) {
   let _hours = hours;
   let _minutes = minutes;
 
-  this.setHours(hours) {
+  this.setHours = function(hours) {
     _hours = hours;
   }
 
-  this.getHours() {
+  this.getHours = function() {
     return _hours;
   }
 }
@@ -370,39 +426,7 @@ class: center, middle
 
 # Polymorphism in JS
 
-Objects in ECMAScript are polymorphic in several meanings.
-
-"polymorphism" describes the idea that a general behavior from a parent class can be overridden in
-a child class to give it more specifics. In fact, relative polymorphism lets us reference the base
-behavior from the overridden behavior.
-
-# Example
-
-```javascript
-
-class Cat {
-
-  voice() {
-    console.log('meow')
-  }
-}
-
-class Tiger extends Cat {
-
-  voice() {
-    console.log('meow !!!')
-  }
-}
-
-```
-
-This technique is called "polymorphism", or "virtual polymorphism".
-
----
-
-# Polymorphism in JS
-
-Another aspect of polymorphism is that a method name can have multiple definitions at different
+One aspect of polymorphism is that a method name can have multiple definitions at different
 levels of the inheritance chain, and these definitions are automatically selected as appropriate when
 resolving which methods are being called.
 
@@ -410,19 +434,19 @@ For example, one function can be applied to different objects, just like it woul
 characteristic of an object (because `this` value determinate on entering the execution context):
 
 ```javascript
-function test(o) {
-  alert(this.a, this.b);
+function getInfo() {
+  console.log(`Hi all, My name is ${this.name}, I'm from ${this.country}`)
 }
 
-const o1 = { a: 10, b: 20 };
-const o2 = { a: 100, b: 200 };
+const userAmanda = { name: 'Amanda', country: 'Poland' };
+const userDalen = { name: 'Dalen', country: 'USA' };
 
-test.call(o1); // 10, 20
-test.call(o2); // 100, 200
+getInfo.call(userAmanda); // Hi all, My name is Amanda, I'm from Poland
+getInfo.call(userDalen); // Hi all, My name is Dalen, I'm from USA
 
-const a = 1;
-const b = 2;
-test(); // 1, 2
+var name = 'Jack';
+var country = 'Canada';
+getInfo(); // Hi all, My name is Jack, I'm from Canada
 ```
 
 ---
