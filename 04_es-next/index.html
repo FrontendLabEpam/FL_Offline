@@ -262,7 +262,7 @@ console.log(j);
 
 ```
 const world = 'World';
-const str = `Hello ${world}!'}`;
+const str = `Hello ${world}!`;
 ```
 --
 ```
@@ -371,7 +371,7 @@ console.log(rectArea({height: 30})); // 150
 
 One caveat with default function params
 ```
-function test(a, b) {  }
+function test(a, b) {}
 ```
 --
 
@@ -382,7 +382,7 @@ test.length
 --
 
 ```
-function test(a, b = 1) {  }
+function test(a, b = 1) {}
 ```
 
 test.length
@@ -392,7 +392,7 @@ test.length
 --
 
 ```
-function test(a = 1, b ) {  }
+function test(a = 1, b ) {}
 ```
 
 test.length
@@ -541,7 +541,7 @@ function* genFunc() {
 }
 ```
 --
-// How about some async operation here 🤔 ?
+// How about some async operation here 🤔?
 --
 ```
 function* genFunc() {
@@ -607,9 +607,9 @@ myMap.set(keyString, "value associated with 'a string'");
 myMap.set(keyObj, 'value associated with keyObj');
 myMap.set(keyFunc, 'value associated with keyFunc');
 
-myMap.get(keyString);    // "value associated with 'a string'"
-myMap.get(keyObj);       // "value associated with keyObj"
-myMap.get(keyFunc);      // "value associated with keyFunc"
+myMap.get(keyString); // "value associated with 'a string'"
+myMap.get(keyObj); // "value associated with keyObj"
+myMap.get(keyFunc); // "value associated with keyFunc"
 ```
 
 ---
@@ -628,8 +628,8 @@ mySet.add(5); // Set { 1, 5 }
 
 mySet.has(1); // true
 mySet.has(3); // false
-mySet.has(5);              // true
-mySet.has(Math.sqrt(25));  // true
+mySet.has(5); // true
+mySet.has(Math.sqrt(25)); // true
 ```
 
 --
