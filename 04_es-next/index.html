@@ -67,6 +67,14 @@ class: center, middle
 --
 
 - 23-25 January 2018 - final feature set for ES2018
+--
+
+- End of January 2019 - final feature set for ES2019
+
+---
+
+* [Last proposals](https://github.com/tc39/proposals/blob/master/finished-proposals.md)
+* [Proposal review process](https://github.com/tc39/proposals)
 
 ---
 
@@ -108,6 +116,8 @@ class: center, middle
 * Template strings
 * Unicode (full support)
 
+# All changes can be found [here](http://es6-features.org)
+
 ---
 
 class: center, middle
@@ -118,8 +128,8 @@ class: center, middle
 
 # ECMAScript 2016
 
-* [Array.prototype.includes](http://www.2ality.com/2016/02/array-prototype-includes.html)
-* [Exponentiation Operator](http://www.2ality.com/2016/02/exponentiation-operator.html)
+* [Array.prototype.includes](https://github.com/tc39/Array.prototype.includes)
+* [Exponentiation Operator](https://github.com/rwaldron/exponentiation-operator)
 
 ---
 
@@ -131,12 +141,11 @@ class: center, middle
 
 # ECMAScript 2017
 
-* [Async Functions](http://www.2ality.com/2016/02/async-functions.html)
-* [Shared memory and atomics](http://www.2ality.com/2017/01/shared-array-buffer.html)
-* [Object.values/Object.entries](http://www.2ality.com/2015/11/stage3-object-entries.html)
-* [String padding](http://www.2ality.com/2015/11/string-padding.html)
-* [Object.getOwnPropertyDescriptors()](http://www.2ality.com/2016/02/object-getownpropertydescriptors.html)
-* [Trailing commas in function parameter lists and calls](http://www.2ality.com/2015/11/trailing-comma-parameters.html)
+* [Object.values/Object.entries](https://github.com/tc39/proposal-object-values-entries)
+* [String padding](https://github.com/tc39/proposal-string-pad-start-end)
+* [Object.getOwnPropertyDescriptors()](https://github.com/tc39/proposal-object-getownpropertydescriptors)
+* [Trailing commas in function parameter lists and calls](https://github.com/tc39/proposal-trailing-function-commas)
+* [Async Functions](https://github.com/tc39/ecmascript-asyncawait)
 
 ---
 
@@ -148,18 +157,40 @@ class: center, middle
 
 # ECMAScript 2018
 
-* [Asynchronous Iteration](http://2ality.com/2016/10/asynchronous-iteration.html)
-* [Rest/Spread Properties](http://2ality.com/2016/10/rest-spread-properties.html)
-* [RegExp named capture groups](http://2ality.com/2017/05/regexp-named-capture-groups.html)
-* [RegExp Unicode Property Escapes](http://2ality.com/2017/07/regexp-unicode-property-escapes.html)
-* [RegExp Lookbehind Assertions](http://2ality.com/2017/05/regexp-lookbehind-assertions.html)
-* [s (dotAll) flag for regular expressions](http://2ality.com/2017/07/regexp-dotall-flag.html)
-* [Promise.prototype.finally()](http://2ality.com/2017/07/promise-prototype-finally.html)
-* [Template Literal Revision](http://2ality.com/2016/09/template-literal-revision.html)
+* [Shared memory and atomics](https://github.com/tc39/ecmascript_sharedmem)
+* [Lifting template literal restriction](https://github.com/tc39/proposal-template-literal-revision)
+* [s (dotAll) flag for regular expressions](https://github.com/tc39/proposal-regexp-dotall-flag)
+* [RegExp named capture groups](https://github.com/tc39/proposal-regexp-named-groups)
+* [Rest/Spread Properties](https://github.com/tc39/proposal-object-rest-spread)
+* [RegExp Lookbehind Assertions](https://github.com/tc39/proposal-regexp-lookbehind)
+* [RegExp Unicode Property Escapes](https://github.com/tc39/proposal-regexp-unicode-property-escapes)
+* [Promise.prototype.finally()](https://github.com/tc39/proposal-promise-finally)
+* [Asynchronous Iteration](https://github.com/tc39/proposal-async-iteration)
+* [Optional catch binding](https://github.com/tc39/proposal-optional-catch-binding)
+* [JSON superset](https://github.com/tc39/proposal-json-superset)
+
+---
+
+class: center, middle
+
+# ECMAScript 2019
+
+---
+
+# ECMAScript 2019
+
+* [Symbol.prototype.description](https://github.com/tc39/proposal-Symbol-description)
+* [Function.prototype.toString revision](https://github.com/tc39/Function-prototype-toString-revision)
+* [Object.fromEntries](https://github.com/tc39/proposal-object-from-entries)
+* [Well-formed JSON.stringify](https://github.com/tc39/proposal-well-formed-stringify)
+* [String.prototype.{trimStart,trimEnd}](https://github.com/tc39/proposal-string-left-right-trim)
+* [Array.prototype.{flat,flatMap}](https://github.com/tc39/proposal-flatMap)
 
 ---
 
 # http://kangax.github.io/compat-table/es6/
+or
+# https://caniuse.com/#feat=es6
 
 ![kangax table](assets/kangax.jpg)
 
@@ -167,7 +198,7 @@ class: center, middle
 
 class: center, middle
 
-# Lets look deeper into some new features
+# Let's look more closely
 
 ---
 
@@ -202,17 +233,48 @@ variable[0] = variable[0]*2; // ??
 ```
 
 ---
+
+# Variable Declarations
+
+```
+const a = {};
+
+a.id = 0;
+
+console.log(a);
+```
+--
+```
+for (var i = 0; i < 5; i++) {}
+
+console.log(i);
+```
+--
+```
+for (let j = 0; j < 5; j++) {}
+
+console.log(j);
+```
+
+---
+
 # String Templates
 
 ```
 const world = 'World';
-const str = `Hello ${world + '!'}`;
+const str = `Hello ${world}!'}`;
 ```
 --
 ```
 const multiline = `
   Sir, in my heart there was a kind of fighting
   That would not let me sleep. Methought I lay
+`;
+```
+--
+```
+const multiline = `
+  Here can be any function ${(function(){ console.log('Hello, world!') })()}
 `;
 ```
 
@@ -266,15 +328,16 @@ An arrow function is always bound to the scope it's defined in.
 Arrow functions are always anonymous.
 
 ```
-let arr = [1,2,3,4].reduce((mem, n) => mem + n);
+let arr = [1,2,3,4].reduce((mem, n) => { return mem + n });
 console.log(arr); // 10
 ```
 --
 
 Shorthand
 ```
-let localInc = n => n+1;
-console.log(localInc(1)); // 2
+let localIncrementer1 = (n) => { return n + 1 };
+let localIncrementer2 = (n) => n + 1;
+let localIncrementer3 = n => n + 1;
 ```
 
 ---
@@ -306,7 +369,7 @@ console.log(rectArea({height: 30})); // 150
 
 ---
 
-One kaveat with default function params
+One caveat with default function params
 ```
 function test(a, b) {  }
 ```
@@ -369,18 +432,19 @@ console.log(cat.describe()); // Tom has 4 legs and says meow
 # Getters/Setters
 
 ```
-const someGuy = {
-  get status () {
-    return this.isMarried ? 'married' : 'single';
+const person = {
+  age: 5,
+  get myAge() {
+    return this.age;
   },
-  set name (name) {
-    if (!name) throw new Error('Need a name');
-    this._name = wateva
+  set name(name) {
+    if (!name) throw new Error('I need a name');
+    this._name = name
   }
 }
 
-log(someGuy.status); // 'single'
-log(someGuy.name = null); // Error: Need a name
+person.age;
+person.name = 'Tom';
 ```
 
 ---
@@ -437,7 +501,7 @@ function fetchJson(url) {
     .then(text => JSON.parse(text))
     .catch(error => console.log(`ERROR: ${error.stack}`));
 }
-fetchJson('https://api.github.com/users/blobor/repos').then(res => console.log(res))
+fetchJson('https://api.github.com/users/${user}/repos').then(res => console.log(res))
 ```
 --
 ```
@@ -451,7 +515,7 @@ async function fetchJson(url) {
     console.log(`ERROR: ${error.stack}`);
   }
 }
-fetchJson('https://api.github.com/users/blobor/repos').then(res => console.log(res))
+fetchJson('https://api.github.com/users/${user}/repos').then(res => console.log(res))
 ```
 ---
 
@@ -509,41 +573,6 @@ async function example() {
   }
 }
 ```
----
-
-# Asynchronous Iteration (real world example)
-
-```
-async function getCommitsCount() {
-  async function fetchJson(url) {
-    try {
-      const request = await fetch(url);
-      const text = await request.text();
-      return JSON.parse(text);
-    }
-    catch (error) {
-      console.log(`ERROR: ${error.stack}`);
-    }
-  }
-
-  async function* fetchCommits(repos) {
-    for (const repo of repos) {
-      const commits = await fetchJson(`${repo.url}/commits`)
-
-      yield commits
-    }
-  }
-
-  const repos = await fetchJson('https://api.github.com/users/blobor/repos')
-  let totalCommits = 0
-
-  for await (const commits of fetchCommits(repos)) {
-    totalCommits += commits.length
-  }
-
-  return totalCommits
-}
-```
 
 ---
 # Asynchronous Iteration
@@ -553,6 +582,73 @@ More info here:
 * http://2ality.com/2016/10/asynchronous-iteration.html
 
 ---
+
+# New data types
+
+* Symbol
+```
+const SOME_CONSTANT_1 = Symbol();
+const SOME_CONSTANT_2 = Symbol('hello');
+```
+--
+* Map
+```
+let myMap = new Map();
+
+let keyString = 'a string';
+let keyObj = {};
+let keyFunc = function() {};
+
+myMap.set(keyString, "value associated with 'a string'");
+myMap.set(keyObj, 'value associated with keyObj');
+myMap.set(keyFunc, 'value associated with keyFunc');
+
+myMap.get(keyString);    // "value associated with 'a string'"
+myMap.get(keyObj);       // "value associated with keyObj"
+myMap.get(keyFunc);      // "value associated with keyFunc"
+```
+
+---
+
+# New data types
+
+* Set
+```
+let mySet = new Set();
+
+mySet.add(1); // Set { 1 }
+mySet.add(5); // Set { 1, 5 }
+mySet.add(5); // Set { 1, 5 }
+
+mySet.has(1); // true
+mySet.has(3); // false
+mySet.has(5);              // true
+mySet.has(Math.sqrt(25));  // true
+```
+--
+* WeakMap
+* WeakSet
+
+---
+
+# Other changes
+
+--
+* (ES6) find, findIndex
+--
+* (ES6) Math.sign
+--
+* (ES6) startsWith, endsWith, includes
+--
+* (ES 2016) exponention operator
+--
+* (ES 2017) Object values, entries
+--
+* (ES 2017) trailing commas
+--
+* (ES 2017) async/await
+--
+* And other stuff. Check materials in the end to find out more!
 
 # Read at home
 
